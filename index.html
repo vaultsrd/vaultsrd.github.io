@@ -851,13 +851,13 @@ body::before{
 <script>
 /*
 ==========================================================
- SIRED00 PIXEL SIGNATURE
+ SIRED00 PIXEL SIGNATURE (FIXED)
  7 rows × 41 columns
 ==========================================================
 
 Setiap karakter menggunakan pola 5 × 7.
 Huruf/angka:
-S I R E D 0 0
+s i r e d 0 0
 
 Angka 1 = kotak hijau
 Angka 0 = kotak kosong
@@ -865,54 +865,54 @@ Angka 0 = kotak kosong
 
 const characters = {
 
-    S: [
-        "11111",
+    s: [
+        "00000",
+        "01110",
+        "10000",
+        "01110",
+        "00001",
+        "01110",
+        "00000"
+    ],
+
+    i: [
+        "00100",
+        "00000",
+        "00100",
+        "00100",
+        "00100",
+        "00100",
+        "00000"
+    ],
+
+    r: [
+        "00000",
+        "10110",
+        "11001",
         "10000",
         "10000",
+        "10000",
+        "00000"
+    ],
+
+    e: [
+        "00000",
+        "01110",
+        "10001",
         "11111",
+        "10000",
+        "01110",
+        "00000"
+    ],
+
+    d: [
         "00001",
         "00001",
-        "11111"
-    ],
-
-    I: [
-        "11111",
-        "00100",
-        "00100",
-        "00100",
-        "00100",
-        "00100",
-        "11111"
-    ],
-
-    R: [
-        "11110",
+        "01111",
         "10001",
         "10001",
-        "11110",
-        "10100",
-        "10010",
-        "10001"
-    ],
-
-    E: [
-        "11111",
-        "10000",
-        "10000",
-        "11110",
-        "10000",
-        "10000",
-        "11111"
-    ],
-
-    D: [
-        "11110",
-        "10001",
-        "10001",
-        "10001",
-        "10001",
-        "10001",
-        "11110"
+        "01111",
+        "00000"
     ],
 
     "0": [
@@ -926,17 +926,20 @@ const characters = {
     ]
 };
 
-const name = "SIRED00";
+const name = "sired00";
 const grid = document.getElementById("pixelGrid");
 
 const rows = 7;
 
+// Loop baris terlebih dahulu (0 sampai 6)
 for(let row = 0; row < rows; row++){
 
+    // Loop karakter (0 sampai 6)
     for(let charIndex = 0; charIndex < name.length; charIndex++){
 
         const character = characters[name[charIndex]];
 
+        // Loop kolom untuk setiap karakter (0 sampai 4)
         for(let col = 0; col < 5; col++){
 
             const pixel = document.createElement("div");
@@ -949,15 +952,13 @@ for(let row = 0; row < rows; row++){
             grid.appendChild(pixel);
         }
 
-        /*
-            Jarak satu kolom antar karakter.
-        */
-
-        const spacer = document.createElement("div");
-        spacer.className = "pixel";
-        spacer.style.visibility = "hidden";
-
-        grid.appendChild(spacer);
+        // Tambahkan spasi HANYA jika bukan karakter terakhir
+        if (charIndex < name.length - 1) {
+            const spacer = document.createElement("div");
+            spacer.className = "pixel";
+            spacer.style.visibility = "hidden";
+            grid.appendChild(spacer);
+        }
     }
 }
 </script>
