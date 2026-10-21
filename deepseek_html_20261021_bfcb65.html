@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launchpad</title>
+
+    <!-- Favicon / Icon yang menarik (menggunakan emoji rocket via SVG data URI) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+    <!-- Alternatif favicon PNG (jika browser tidak mendukung SVG) -->
+    <link rel="alternate icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0b1020;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        .frame-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Efek loading sebelum iframe tampil */
+        .loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background: radial-gradient(circle at 50% 40%, #1b2550, #0b1020 70%);
+            color: #fff;
+            z-index: 2;
+            transition: opacity .6s ease, visibility .6s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .rocket {
+            font-size: 48px;
+            animation: float 1.6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-4deg); }
+            50%      { transform: translateY(-12px) rotate(4deg); }
+        }
+
+        .loader p {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: .8;
+        }
+
+        .bar {
+            width: 160px;
+            height: 4px;
+            border-radius: 4px;
+            background: rgba(255,255,255,.15);
+            overflow: hidden;
+        }
+
+        .bar::after {
+            content: "";
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #7c5cff, #38d9ff);
+            border-radius: 4px;
+            animation: slide 1.2s ease-in-out infinite;
+        }
+
+        @keyframes slide {
+            0%   { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="frame-wrapper">
+        <div class="loader" id="loader">
+            <div class="rocket">🚀</div>
+            <p>Launchpad Loading</p>
+            <div class="bar"></div>
+        </div>
+
+        <iframe
+            id="appFrame"
+            src="https://script.google.com/macros/s/AKfycbwv-aa9WOKTjGnwLyKgbTOVnQoTKlK2AknKqm1XJVb_oat1_zD_zBilqI4JeVJUlwyY/exec"
+            title="Launchpad Application"
+            allow="clipboard-read; clipboard-write; fullscreen"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+    <script>
+        const iframe = document.getElementById('appFrame');
+        const loader = document.getElementById('loader');
+
+        // Sembunyikan loader saat iframe selesai dimuat
+        iframe.addEventListener('load', () => {
+            setTimeout(() => loader.classList.add('hidden'), 400);
+        });
+
+        // Fallback: sembunyikan loader setelah 8 detik (jika event load tidak terpicu)
+        setTimeout(() => loader.classList.add('hidden'), 8000);
+    </script>
+
+</body>
+</html>
